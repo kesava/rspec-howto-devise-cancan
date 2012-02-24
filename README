@@ -1,0 +1,33 @@
+Rspec Howto
+===========
+Basic Setup
+-----------
+RSpec is a great tool in the behavior driven design process of writing human readable specifications that direct and validate the development of your application.
+We put the specifications (or specs) in a spec folder; we have one spec file for each class. Notice the spec_helper.rb file. For our specs to run, we need to require the Ruby classes we’re testing. That’s what we’re doing inside the spec_helper file.
+In order to facilitate test driven development, we want to continuously monitor our app folder and run tests in the background as we continue to work on development of the application.  We will use rspec along with Guard and spork towards this end. Guard is a command line tool to easily handle events on file system modifications. Spork is a server for testing frameworks that forks before each run to ensure a clean testing state.
+It’s pretty easy to install Rspec, guard and spork. On the command line and run this:
+gem install rspec
+or include it as part of Gemfile
+<pre><code>group :development do
+ gem 'rspec-rails'
+ gem 'guard'
+ gem 'guard-rspec'
+end
+
+group :test do
+ gem 'rspec'
+ gem 'growl'
+ gem 'rb-fsevent'
+ gem 'spork-rails'
+ gem 'guard-spork'
+end
+</code></pre>
+and do bundle install
+Now download Mac OSX Growl here. Double click on the downloaded dmg file and install Growl. Relaunch the dmg file and click on the Extras folder, then click on growlnotify, and install it using the pkg file.
+Now, assuming that you have checked out the code and Rspec tests in place (in spec folder), type this in the terminal to initiate a Guardfile with the Guard for Rspec:
+bundle exec guard init rspec
+If you are running it for the first time, this creates a Guardfile, but since the codebase already consists of a Guardfile, it should just use it. Guardfile specifies what directories should be monitored for any modifications. Spec_helper specifies a few key things including -
+Required ruby classes to run tests, like rubygems, spork, factory_girl, webrat etc.
+ What should the initial test load environment should look like, i.e. Spork.prefork
+What should spork be loading for each fork i.e. Spork.each_run
+
